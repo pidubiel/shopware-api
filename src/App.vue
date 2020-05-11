@@ -1,7 +1,9 @@
 <template>
-  <div class="container-fluid pl-0 pr-0">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+  <div class="container pl-0 pr-0">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">
+        <strong>Demo</strong>store
+      </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -37,27 +39,36 @@
         </ul>
       </div>
     </nav>
-    <div class="container-fluid mt-4">
+    <div class="container mt-4">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
           <h1>Shopware API</h1>
-          <button @click="fetchProducts">Get Products</button>
-          <button @click="fetchNavigation">Fetch Navigation</button>
-          <button @click="clear()">Clear</button>
-          <ul>
-            <li v-for="item in response" :key="item.id">{{ item.translated.name }}</li>
-          </ul>
-          <!-- <ul>
-            <li v-for="category in categories" :key="category.mediaId">
-              {{ category.name }}
-              <ul>
-                <li
-                  v-for="subcategory in category.children"
-                  :key="subcategory.id"
-                >{{ subcategory.name }}</li>
-              </ul>
-            </li>
-          </ul>-->
+          <button class="btn btn-success" @click="fetchProducts">Get Products</button>
+          <button class="btn btn-success" @click="fetchNavigation">Fetch Navigation</button>
+          <button class="btn btn-danger" @click="clear()">Clear</button>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-5">
+        <div v-for="item in response" :key="item.id" class="col mb-4">
+          <div class="card">
+            <img
+              v-bind:src="item.cover.media.thumbnails[0].url"
+              class="card-img-top"
+              style="max-height: 150px"
+              alt="..."
+            />
+            <div class="card-body text-center">
+              <h5 class="card-title text-left" style="min-height: 80px">{{ item.translated.name }}</h5>
+              <p
+                class="card-text text-left"
+                style="font-size: 12px; min-height: 110px"
+              >{{ item.translated.description }}</p>
+              <h3 class="text-center">
+                <strong>{{ item.price[0].gross }}$</strong>
+              </h3>
+              <button class="btn btn-primary">Add to shopping cart</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -86,6 +97,7 @@ export default {
         .then(res => res.json())
         .then(data => {
           this.response = data.data;
+          console.log(data);
         });
     },
     fetchNavigation() {
@@ -107,6 +119,10 @@ export default {
       this.response = [];
       this.categories = [];
     }
+  },
+  created() {
+    this.fetchNavigation();
+    this.fetchProducts();
   }
 };
 </script>
