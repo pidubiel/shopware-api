@@ -47,7 +47,9 @@
           <div class="card">
             <img v-bind:src="item.cover.media.thumbnails[0].url" class="card-img-top" style="max-height: 150px;" alt="..." />
             <div class="card-body text-center">
-              <h5 class="card-title text-left" style="min-height: 80px;">{{ item.translated.name }}</h5>
+              <h5 class="card-title text-left" style="min-height: 80px;">
+                <router-link :to="`/product/${item.id}`">{{ item.translated.name }}</router-link>
+              </h5>
               <p class="card-text text-left" style="font-size: 12px; min-height: 110px;">{{ item.translated.description }}</p>
               <h3 class="text-center">
                 <strong>{{ item.price[0].gross }}$</strong>
