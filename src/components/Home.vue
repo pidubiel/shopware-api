@@ -47,7 +47,6 @@
           <button class="btn btn-success" @click="fetchProducts">Get Products</button>
           <button class="btn btn-success" @click="fetchNavigation">Fetch Navigation</button>
           <button class="btn btn-danger" @click="clear()">Clear</button>
-          <!-- <button class="btn btn-danger" @click="clearCart()">Clear Cart</button> -->
           <div v-if="cart.length>0" class="cart mt-4">
             <h1>Cart</h1>
             <table class="table table">
@@ -156,7 +155,9 @@ export default {
         })
         .then(res => res.json())
         .then(data => {
+          console.log("DATA: ", data);
           this.cart = data.data.lineItems;
+          console.log("CART FETCHED", data.data.lineItems, this.contextToken);
         });
     },
     printProductId(id) {
@@ -200,16 +201,19 @@ export default {
     clear() {
       this.response = [];
       this.categories = [];
+      this.cart = [];
     },
     clearCart() {
       this.cart = [];
     }
   },
   created() {
-    console.log("123");
-    // this.getContextToken();
+    console.log("123", this.cart);
+    this.clearCart();
     this.fetchNavigation();
     this.fetchProducts();
+  },
+  mounted() {
     this.fetchCart();
   }
 };
