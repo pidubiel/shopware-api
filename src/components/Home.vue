@@ -41,25 +41,30 @@
     </nav>
     <div class="container mt-4">
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-3">
           <h1>Shopware API</h1>
+          <h2 style="font-size: 10px">Context token: {{contextToken}}</h2>
           <button class="btn btn-success" @click="fetchProducts">Get Products</button>
           <button class="btn btn-success" @click="fetchNavigation">Fetch Navigation</button>
           <button class="btn btn-danger" @click="clear()">Clear</button>
-          <button class="btn btn-danger" @click="clearCart()">Clear Cart</button>
+          <!-- <button class="btn btn-danger" @click="clearCart()">Clear Cart</button> -->
           <div v-if="cart.length>0" class="cart mt-4">
             <h1>Cart</h1>
-            <table class="table table-sm">
+            <table class="table table">
               <thead>
                 <tr>
                   <th scope="col">Product</th>
                   <th scope="col">Price</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="product in cart" :key="product.id">
+                <tr v-for="(product, index) in cart" :key="index">
                   <td>{{ product.label }}</td>
                   <td>{{ product.price.totalPrice }}$</td>
+                  <td>
+                    <button class="btn btn-danger" @click="removeFromCart(product.id)">Remove</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -98,6 +103,7 @@
 
 <script>
 export default {
+  props: ["contextToken"],
   data() {
     return {
       response: [],
@@ -140,15 +146,17 @@ export default {
         });
     },
     fetchCart() {
-      const config = { "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG" };
+      const config = {
+        "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
+        "sw-context-token": this.contextToken
+      };
       this.$http
         .get("http://192.168.33.10/sales-channel-api/v1/checkout/cart", {
           headers: config
         })
         .then(res => res.json())
         .then(data => {
-          this.cart = data.data;
-          console.log("Cart: ", data);
+          this.cart = data.data.lineItems;
         });
     },
     printProductId(id) {
@@ -156,7 +164,8 @@ export default {
     },
     addToCart(id) {
       const config = {
-        "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG"
+        "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
+        "sw-context-token": this.contextToken
       };
       this.$http
         .post(
@@ -168,10 +177,24 @@ export default {
         )
         .then(res => res.json())
         .then(data => {
-          //this.fetchCart();
-          this.cart.push(data.data.lineItems[0]);
-          console.log("Item data: ", data.data.lineItems[0]);
-          console.log("Cart: ", this.cart);
+          this.cart = data.data.lineItems;
+        });
+    },
+    removeFromCart(id) {
+      const config = {
+        "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
+        "sw-context-token": this.contextToken
+      };
+      this.$http
+        .delete(
+          `http://192.168.33.10/sales-channel-api/v1/checkout/cart/line-item/${id}`,
+          {
+            headers: config
+          }
+        )
+        .then(res => res.json())
+        .then(data => {
+          this.cart = data.data.lineItems;
         });
     },
     clear() {
@@ -183,9 +206,11 @@ export default {
     }
   },
   created() {
+    console.log("123");
+    // this.getContextToken();
     this.fetchNavigation();
     this.fetchProducts();
-    //this.fetchCart();
+    this.fetchCart();
   }
 };
 </script>
