@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <router-link to="/">Home</router-link>
     <h1>Product</h1>
     <h2>Stock: {{ productData.stock }}</h2>
     <h6>Product ID: {{ id }}</h6>

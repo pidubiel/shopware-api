@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <router-link to="/">Home</router-link>
     <h1 class="mb-3">Checkout</h1>
     <hr />
     <div class="row">
