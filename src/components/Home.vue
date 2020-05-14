@@ -68,6 +68,9 @@
               </tbody>
             </table>
             <h3>Total Price: {{totalPrice}}$</h3>
+            <router-link :to="`/checkout/`">
+              <button class="btn btn-success">Proceed to checkout</button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -214,6 +217,8 @@ export default {
     this.fetchProducts();
   },
   mounted() {
+    this.clearCart();
+    console.log("cleared cart");
     this.fetchCart();
   }
 };
