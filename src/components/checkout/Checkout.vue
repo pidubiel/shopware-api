@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1 class="mb-3">Checkout</h1>
+    <button @click="printShippingInfo" class="btn btn-warning">Print shippingInfo</button>
     <hr />
     <div class="row">
       <div class="col-md-4 order-md-2 mb-4">
@@ -58,7 +59,12 @@
           <div class="row">
             <div class="col-md-5 mb-3">
               <label for="country">Salutation*</label>
-              <select class="custom-select d-block w-100" id="country" required>
+              <select
+                class="custom-select d-block w-100"
+                id="country"
+                required
+                v-model="shippingInfo.salutation"
+              >
                 <option value disabled="disabled">Enter Salutation...</option>
                 <option>Not specified</option>
                 <option>Mrs.</option>
@@ -74,6 +80,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="shippingInfo.firstName"
                 id="firstName"
                 placeholder="Enter first name..."
                 value
@@ -86,6 +93,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="shippingInfo.lastName"
                 id="lastName"
                 placeholder="Enter last name..."
                 value
@@ -97,7 +105,13 @@
 
           <div class="mb-3">
             <label for="email">Email*</label>
-            <input type="email" class="form-control" id="email" placeholder="you@example.com" />
+            <input
+              type="email"
+              class="form-control"
+              v-model="shippingInfo.email"
+              id="email"
+              placeholder="you@example.com"
+            />
             <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
           </div>
 
@@ -112,6 +126,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="shippingInfo.street"
                 id="zip"
                 placeholder="Enter street address..."
                 required
@@ -123,6 +138,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="shippingInfo.zipCode"
                 id="zip"
                 placeholder="Enter postal code..."
                 required
@@ -131,7 +147,14 @@
             </div>
             <div class="col-md-4 mb-3">
               <label for="zip">City*</label>
-              <input type="text" class="form-control" id="zip" placeholder="Enter city..." required />
+              <input
+                type="text"
+                class="form-control"
+                v-model="shippingInfo.city"
+                id="zip"
+                placeholder="Enter city..."
+                required
+              />
               <div class="invalid-feedback">Zip code required.</div>
             </div>
           </div>
@@ -141,6 +164,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="shippingInfo.country"
                 id="address"
                 placeholder="Enter country..."
                 required
@@ -156,3 +180,27 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      shippingInfo: {
+        salutation: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        street: "",
+        zipCode: "",
+        city: "",
+        country: ""
+      }
+    };
+  },
+  methods: {
+    printShippingInfo: function() {
+      console.log(this.shippingInfo);
+    }
+  }
+};
+</script>

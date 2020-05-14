@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-5">
-        <div v-for="item in response" :key="item.id" class="col mb-4">
+        <div v-for="item in products" :key="item.id" class="col mb-4">
           <div class="card">
             <img
               v-bind:src="item.cover.media.thumbnails[0].url"
@@ -69,9 +69,8 @@ export default {
   props: ["contextToken"],
   data() {
     return {
-      response: [],
-      cart: [],
-      addToCartTest: []
+      products: [],
+      cart: []
     };
   },
   computed: {
@@ -88,7 +87,7 @@ export default {
         })
         .then(res => res.json())
         .then(data => {
-          this.response = data.data;
+          this.products = data.data;
           console.log("All products: ", data);
         });
     },
@@ -147,7 +146,7 @@ export default {
         });
     },
     clear() {
-      this.response = [];
+      this.products = [];
       this.categories = [];
       this.cart = [];
     },
