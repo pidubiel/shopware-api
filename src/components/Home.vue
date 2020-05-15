@@ -14,13 +14,17 @@
               <thead>
                 <tr>
                   <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(product, index) in cart" :key="index">
-                  <td>{{ product.label }}</td>
+                  <td>
+                    <router-link :to="`/product/${product.id}`">{{ product.label }}</router-link>
+                  </td>
+                  <td>{{ product.quantity }}</td>
                   <td>{{ product.price.totalPrice }}$</td>
                   <td>
                     <button class="btn btn-danger" @click="removeFromCart(product.id)">Remove</button>
@@ -126,6 +130,7 @@ export default {
         .then(res => res.json())
         .then(data => {
           this.cart = data.data.lineItems;
+          console.log("Add product data: ", this.cart);
         });
     },
     removeFromCart(id) {

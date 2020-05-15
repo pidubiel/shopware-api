@@ -174,8 +174,10 @@
           </div>
 
           <hr class="mb-4" />
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue</button>
         </form>
+        <button @click="guestOrder" class="btn btn-primary btn-lg btn-block">Continue</button>
+        <button @click="getCountry" class="btn btn-primary btn-lg btn-block">Get country</button>
+        <button @click="simpleOrder" class="btn btn-primary btn-lg btn-block">Simple order</button>
       </div>
     </div>
   </div>
@@ -183,6 +185,7 @@
 
 <script>
 export default {
+  props: ["contextToken"],
   data() {
     return {
       shippingInfo: {
@@ -200,6 +203,79 @@ export default {
   methods: {
     printShippingInfo: function() {
       console.log(this.shippingInfo);
+    },
+    getCountry: function() {
+      let headers = {
+        "Content-Type": "application/json",
+        "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG"
+      };
+      const url = `http://192.168.33.10/sales-channel-api/v1/sales-channel/countries?filter[iso3]=deu`;
+      return fetch(url, { method: "GET", headers })
+        .then(resp => resp.json())
+        .then(({ data }) => {
+          console.log(data);
+          return data;
+        });
+    },
+    guestOrder: function() {
+      const customer = {
+        guest: true,
+        firstName: this.shippingInfo.firstName,
+        lastName: this.shippingInfo.lastName,
+        email: this.shippingInfo.email,
+        billingStreet: this.shippingInfo.street,
+        billingZipcode: this.shippingInfo.zipCode,
+        billingCity: this.shippingInfo.city
+      };
+      let headers = {
+        "Content-Type": "application/json",
+        "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
+        "sw-context-token": this.contextToken
+      };
+      const url = `http://192.168.33.10/sales-channel-api/v1/checkout/guest-order`;
+      const body = JSON.stringify(customer);
+      return fetch(url, { method: "POST", headers, body })
+        .then(resp => resp.json())
+        .then(({ data }) => {
+          console.log("Guest Order: ", data);
+          return data;
+        });
+    },
+    simpleOrder: function() {
+      const customer = {
+        salutationId: "22",
+        guest: true,
+        firstName: this.shippingInfo.firstName,
+        lastName: this.shippingInfo.lastName,
+        email: this.shippingInfo.email,
+        billingAddress: {
+          salutationId: "22",
+          countryId: "pol",
+          street: this.shippingInfo.street,
+          zipcode: this.shippingInfo.zipCode,
+          city: this.shippingInfo.city
+        }
+      };
+      const body = JSON.stringify(customer);
+      const config = {
+        "Content-Type": "application/json",
+        "sw-access-key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
+        "sw-context-token": this.contextToken
+      };
+      this.$http
+        .post(
+          `http://192.168.33.10/sales-channel-api/v1/checkout/guest-order`,
+          body,
+          {
+            headers: config
+          }
+        )
+        .then(res => res.json())
+        .then(data => {
+          //this.cart = data.data.lineItems;
+          console.log("SimpleOrder: ", data);
+          return data;
+        });
     }
   }
 };

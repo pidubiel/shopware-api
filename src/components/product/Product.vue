@@ -1,10 +1,9 @@
 <template>
   <div class="container">
-    <h1>Product</h1>
+    <h1>{{ productData.translated.name }}</h1>
     <h2>Stock: {{ productData.stock }}</h2>
     <h6>Product ID: {{ id }}</h6>
     <img v-bind:src="productData.cover.media.url" alt="Product image" style="max-height: 200px;" />
-    <h6 class="mt-4">Product Name: {{ productData.translated.name }}</h6>
     <h6>Product Description: {{ productData.translated.description }}</h6>
     <h2 class="mt-5">Properties: {{ productData.sortedProperties }}</h2>
     <table class="table table-sm mt-5 col-lg-6">
