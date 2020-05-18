@@ -175,7 +175,7 @@
 
           <hr class="mb-4" />
         </form>
-        <button @click="guestOrder" class="btn btn-primary btn-lg btn-block">Continue</button>
+        <button @click="getSalutation" class="btn btn-primary btn-lg btn-block">Get salutation</button>
         <button @click="getCountry" class="btn btn-primary btn-lg btn-block">Get country</button>
         <button @click="simpleOrder" class="btn btn-primary btn-lg btn-block">Simple order</button>
       </div>
@@ -209,12 +209,26 @@ export default {
         "Content-Type": "application/json",
         "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG"
       };
-      const url = `http://192.168.33.10/sales-channel-api/v1/sales-channel/countries?filter[iso3]=deu`;
+      const url = `http://192.168.33.10/sales-channel-api/v1/country?filter[iso3]=deu`;
       return fetch(url, { method: "GET", headers })
         .then(resp => resp.json())
         .then(({ data }) => {
           console.log(data);
           return data;
+        });
+    },
+    getSalutation: function() {
+      let headers = {
+        "Content-Type": "application/json",
+        "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG"
+      };
+      const url = `http://192.168.33.10/sales-channel-api/v1/salutation`;
+      return fetch(url, { method: "GET", headers })
+        .then(resp => resp.json())
+        .then(json => {
+          console.log("Salutation: ", json.data[0].id);
+          this.shippingInfo.salutation = json.data[0].id;
+          return json.data[0];
         });
     },
     guestOrder: function() {
@@ -242,15 +256,16 @@ export default {
         });
     },
     simpleOrder: function() {
+      console.log("Shipping INFO: ", this.shippingInfo);
       const customer = {
-        salutationId: "22",
+        salutationId: this.shippingInfo.salutation,
         guest: true,
         firstName: this.shippingInfo.firstName,
         lastName: this.shippingInfo.lastName,
         email: this.shippingInfo.email,
         billingAddress: {
-          salutationId: "22",
-          countryId: "pol",
+          salutationId: this.shippingInfo.salutation,
+          countryId: "b735f5eefb8b4c8395db41b5a9803a01",
           street: this.shippingInfo.street,
           zipcode: this.shippingInfo.zipCode,
           city: this.shippingInfo.city
