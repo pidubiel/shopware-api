@@ -5,9 +5,9 @@
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-3">
           <h1>Shopware API</h1>
           <h2 style="font-size: 10px">Context token: {{contextToken}}</h2>
-          <button class="btn btn-success" @click="fetchProducts">Get Products</button>
+          <!-- <button class="btn btn-success" @click="fetchProducts">Get Products</button> -->
           <!-- <button class="btn btn-success" @click="fetchNavigation">Fetch Navigation</button> -->
-          <button class="btn btn-danger" @click="clear()">Clear</button>
+          <!-- <button class="btn btn-danger" @click="clear()">Clear</button> -->
           <div v-if="cart.length>0" class="cart mt-4">
             <h1>Cart</h1>
             <table class="table table">

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <h1 class="mb-3">Checkout</h1>
-    <button @click="printShippingInfo" class="btn btn-warning">Print shippingInfo</button>
+    <!-- <button @click="printShippingInfo" class="btn btn-warning">Print shippingInfo</button> -->
     <hr />
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-4 order-md-2 mb-4">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-muted">Your cart</span>
@@ -52,133 +52,132 @@
             </div>
           </div>
         </form>
-      </div>
-      <div class="col-md-8 order-md-1">
-        <h4 class="mb-3">Shipping information</h4>
-        <form class="needs-validation" novalidate>
-          <div class="row">
-            <div class="col-md-5 mb-3">
-              <label for="country">Salutation*</label>
-              <select
-                class="custom-select d-block w-100"
-                id="country"
-                required
-                v-model="shippingInfo.salutation"
-              >
-                <option value disabled="disabled">Enter Salutation...</option>
-                <option>Not specified</option>
-                <option>Mrs.</option>
-                <option>Mr.</option>
-              </select>
-              <div class="invalid-feedback">Please select a valid country.</div>
-            </div>
+    </div>-->
+    <div class="col-md-12 order-md-1">
+      <h4 class="mb-3">Shipping information</h4>
+      <form class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label for="country">Salutation*</label>
+            <select
+              class="custom-select d-block w-100"
+              id="country"
+              required
+              v-model="shippingInfo.salutation"
+            >
+              <option value disabled="disabled">Enter Salutation...</option>
+              <option>Not specified</option>
+              <option>Mrs.</option>
+              <option>Mr.</option>
+            </select>
+            <div class="invalid-feedback">Please select a valid country.</div>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="firstName">First name*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.firstName"
-                id="firstName"
-                placeholder="Enter first name..."
-                value
-                required
-              />
-              <div class="invalid-feedback">Valid first name is required.</div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="lastName">Last name*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.lastName"
-                id="lastName"
-                placeholder="Enter last name..."
-                value
-                required
-              />
-              <div class="invalid-feedback">Valid last name is required.</div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="email">Email*</label>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName">First name*</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              v-model="shippingInfo.email"
-              id="email"
-              placeholder="you@example.com"
+              v-model="shippingInfo.firstName"
+              id="firstName"
+              placeholder="Enter first name..."
+              value
+              required
             />
-            <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+            <div class="invalid-feedback">Valid first name is required.</div>
           </div>
-
-          <p class="mt-5">
-            <strong>Your address</strong>
-          </p>
-          <hr />
-
-          <div class="row">
-            <div class="col-md-5 mb-3">
-              <label for="zip">Street address*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.street"
-                id="zip"
-                placeholder="Enter street address..."
-                required
-              />
-              <div class="invalid-feedback">Zip code required.</div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="zip">Postal code*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.zipCode"
-                id="zip"
-                placeholder="Enter postal code..."
-                required
-              />
-              <div class="invalid-feedback">Zip code required.</div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="zip">City*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.city"
-                id="zip"
-                placeholder="Enter city..."
-                required
-              />
-              <div class="invalid-feedback">Zip code required.</div>
-            </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName">Last name*</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="shippingInfo.lastName"
+              id="lastName"
+              placeholder="Enter last name..."
+              value
+              required
+            />
+            <div class="invalid-feedback">Valid last name is required.</div>
           </div>
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="address">Country*</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="shippingInfo.country"
-                id="address"
-                placeholder="Enter country..."
-                required
-              />
-              <div class="invalid-feedback">Please enter your shipping address.</div>
-            </div>
-          </div>
+        </div>
 
-          <hr class="mb-4" />
-        </form>
-        <button @click="getSalutation" class="btn btn-primary btn-lg btn-block">Get salutation</button>
-        <button @click="getCountry" class="btn btn-primary btn-lg btn-block">Get country</button>
-        <button @click="simpleOrder" class="btn btn-primary btn-lg btn-block">Simple order</button>
-      </div>
+        <div class="mb-3">
+          <label for="email">Email*</label>
+          <input
+            type="email"
+            class="form-control"
+            v-model="shippingInfo.email"
+            id="email"
+            placeholder="you@example.com"
+          />
+          <div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+        </div>
+
+        <p class="mt-5">
+          <strong>Your address</strong>
+        </p>
+        <hr />
+
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label for="zip">Street address*</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="shippingInfo.street"
+              id="zip"
+              placeholder="Enter street address..."
+              required
+            />
+            <div class="invalid-feedback">Zip code required.</div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="zip">Postal code*</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="shippingInfo.zipCode"
+              id="zip"
+              placeholder="Enter postal code..."
+              required
+            />
+            <div class="invalid-feedback">Zip code required.</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="zip">City*</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="shippingInfo.city"
+              id="zip"
+              placeholder="Enter city..."
+              required
+            />
+            <div class="invalid-feedback">Zip code required.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="address">Country*</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="shippingInfo.country"
+              id="address"
+              placeholder="Enter country..."
+              required
+            />
+            <div class="invalid-feedback">Please enter your shipping address.</div>
+          </div>
+        </div>
+
+        <hr class="mb-4" />
+      </form>
+      <h3 class="text-success" v-if="orderData">The order has been placed!</h3>
+      <!-- <button @click="getSalutation" class="btn btn-primary btn-lg btn-block">Get salutation</button> -->
+      <button @click="order" class="btn btn-primary btn-lg btn-block mb-3">Simple order</button>
     </div>
   </div>
 </template>
@@ -188,6 +187,7 @@ export default {
   props: ["contextToken"],
   data() {
     return {
+      orderData: "",
       shippingInfo: {
         salutation: "",
         firstName: "",
@@ -209,7 +209,7 @@ export default {
         "Content-Type": "application/json",
         "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG"
       };
-      const url = `http://192.168.33.10/sales-channel-api/v1/country?filter[iso3]=deu`;
+      const url = `http://192.168.33.10/sales-channel-api/v1/country?filter[iso3]=pol`;
       return fetch(url, { method: "GET", headers })
         .then(resp => resp.json())
         .then(({ data }) => {
@@ -231,30 +231,6 @@ export default {
           return json.data[0];
         });
     },
-    guestOrder: function() {
-      const customer = {
-        guest: true,
-        firstName: this.shippingInfo.firstName,
-        lastName: this.shippingInfo.lastName,
-        email: this.shippingInfo.email,
-        billingStreet: this.shippingInfo.street,
-        billingZipcode: this.shippingInfo.zipCode,
-        billingCity: this.shippingInfo.city
-      };
-      let headers = {
-        "Content-Type": "application/json",
-        "SW-Access-Key": "SWSCZNJ1SKHBEXLUMWM1VMVPSG",
-        "sw-context-token": this.contextToken
-      };
-      const url = `http://192.168.33.10/sales-channel-api/v1/checkout/guest-order`;
-      const body = JSON.stringify(customer);
-      return fetch(url, { method: "POST", headers, body })
-        .then(resp => resp.json())
-        .then(({ data }) => {
-          console.log("Guest Order: ", data);
-          return data;
-        });
-    },
     simpleOrder: function() {
       console.log("Shipping INFO: ", this.shippingInfo);
       const customer = {
@@ -265,7 +241,7 @@ export default {
         email: this.shippingInfo.email,
         billingAddress: {
           salutationId: this.shippingInfo.salutation,
-          countryId: "b735f5eefb8b4c8395db41b5a9803a01",
+          countryId: "e07b588b2a4843a9838a9598b23fe719",
           street: this.shippingInfo.street,
           zipcode: this.shippingInfo.zipCode,
           city: this.shippingInfo.city
@@ -289,8 +265,14 @@ export default {
         .then(data => {
           //this.cart = data.data.lineItems;
           console.log("SimpleOrder: ", data);
+          this.orderData = data;
+          console.log("Order DATA: ", this.orderData);
           return data;
         });
+    },
+    order() {
+      this.getSalutation();
+      setTimeout(this.simpleOrder, 1000);
     }
   }
 };

@@ -5,8 +5,8 @@
     <h6>Product ID: {{ id }}</h6>
     <img v-bind:src="productData.cover.media.url" alt="Product image" style="max-height: 200px;" />
     <h6>Product Description: {{ productData.translated.description }}</h6>
-    <h2 class="mt-5">Properties: {{ productData.sortedProperties }}</h2>
-    <table class="table table-sm mt-5 col-lg-6">
+    <!-- <h2 class="mt-5">Properties: {{ productData.sortedProperties }}</h2> -->
+    <!-- <table class="table table-sm mt-5 col-lg-6">
       <tbody>
         <tr>
           <td>
@@ -45,7 +45,7 @@
           <td>@twitter</td>
         </tr>
       </tbody>
-    </table>
+    </table>-->
   </div>
 </template>
 
